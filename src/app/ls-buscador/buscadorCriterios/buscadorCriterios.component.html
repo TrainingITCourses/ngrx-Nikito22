@@ -1,0 +1,3 @@
+<select (change)="onCambioCriterio($event)">
+  <option [value]='o.value' *ngFor="let o of criterios$ | async"> {{o.viewValue}} </option>
+</select>

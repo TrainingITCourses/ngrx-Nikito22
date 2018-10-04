@@ -1,0 +1,33 @@
+ol {
+  display: block;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-bottom: 1px solid #CCCCCC;
+}
+
+li {
+  margin: 0;
+  padding: 0;
+  display: list-item;
+  text-align: -webkit-match-parent;
+  display: block;
+  text-decoration: none;
+  color: #000000;
+  background-color: #FFFFFF;
+  line-height: 1.5em;
+  border: 1px solid #CCCCCC;
+  border-bottom: none;
+  padding-left: 10px;
+}
+
+div {
+  color: white;
+  background-color: #CCCCCC;
+  padding: 5px;
+}
+
+span {
+  float: right;
+  padding-right: 5px;
+}
