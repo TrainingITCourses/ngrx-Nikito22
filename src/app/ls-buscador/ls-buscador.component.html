@@ -1,11 +1,6 @@
-<div *ngIf="estaCargado$ | async; else noCargado">
-  <label>Buscar por: </label>
-  <select [value]="-1" (change)="alCambioTipoCriterio($event)">
-    <option *ngFor="let e of tiposCriterios" [value]="e">{{e}}</option>
-  </select>
-  <ls-buscador-criterios></ls-buscador-criterios>
-  <ls-buscador-lanzamientos></ls-buscador-lanzamientos>
-</div>
-<ng-template #noCargado>
-  Cargando datos iniciales
-</ng-template>
+<label>Buscar por: </label>
+<select [value]="-1" (change)="alCambioTipoCriterio($event)">
+  <option *ngFor="let e of tiposCriterios" [value]="e">{{e}}</option>
+</select>
+<ls-buscador-criterios></ls-buscador-criterios>
+<ls-buscador-lanzamientos></ls-buscador-lanzamientos>

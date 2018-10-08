@@ -1,5 +1,7 @@
+<div *ngIf="(isa$ | async).cargado">
 <ol>
-    <li *ngFor="let l of lanzamientos$ | async">
+    <li *ngFor="let l of (isa$ | async).lanzamientos">
         {{l.name}} <span>{{l.launchDate}}</span>
     </li>
 </ol>
+</div>

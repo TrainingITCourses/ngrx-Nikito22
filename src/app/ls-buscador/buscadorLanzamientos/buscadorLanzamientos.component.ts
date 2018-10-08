@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 import { Component, OnInit, } from '@angular/core';
-import { IsaStore, IsaSlideTypes } from '../../stores/isa-store.state';
+import { Store } from '@ngrx/store';
+import { State } from './../../reducers/index';
 
 @Component({
   selector: 'ls-buscador-lanzamientos',
@@ -9,12 +10,13 @@ import { IsaStore, IsaSlideTypes } from '../../stores/isa-store.state';
 })
 export class LsBuscadorLanzamientosComponent implements OnInit {
 
-  public lanzamientos$: Observable<any>;
+  public isa$: Observable<any>;
+  public lanzamientos: any[] = [];
 
-  constructor(public Isa: IsaStore) { }
+  constructor(public store: Store<State>) { }
 
   ngOnInit() {
-    this.lanzamientos$ = this.Isa.select$(IsaSlideTypes.lanzamientos);
+    this.isa$ = this.store.select('isa');
   }
 
 }

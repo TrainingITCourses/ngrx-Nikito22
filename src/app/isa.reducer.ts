@@ -1,6 +1,5 @@
-import { IsaActionTypes } from './stores/isa-store.actions';
 import { Action } from '@ngrx/store';
-import { CargaInicial } from './isa.actions';
+import { CargaInicial, IsaActionTypes, IsaActions } from './isa.actions';
 
 
 export interface State {
@@ -26,15 +25,15 @@ export const initialState: State = {
   lanzamientos: [],
 };
 
-export function reducer(state = initialState, action: Action): State {
+export function reducer(state = initialState, action: IsaActions): State {
   switch (action.type) {
-    case 'CargaInicial':
+    case IsaActionTypes.CargaInicial:
       state.cache = action.payload;
       state.cargado = true;
       console.log('Cargados datos iniciales');
       break;
 
-    case 'CambioTipoCriterio':
+    case IsaActionTypes.CambioTipoCriterio:
       state.tipoCriterio = action.payload;
       switch (action.payload) {
         case enTipoCriterio.Estado:
@@ -50,26 +49,23 @@ export function reducer(state = initialState, action: Action): State {
       console.log('Asignados criterios ' + enTipoCriterio[action.payload]);
       break;
 
-    case 'CambioCritero':
+    case IsaActionTypes.CambioCritero:
       switch (state.tipoCriterio) {
         case enTipoCriterio.Estado:
-          state.lanzamientos = state.cache.lanzamientos.filter(l => l.status === Number(action.payload));
+          state.lanzamientos = [ ...state.cache.lanzamientos.filter(l => l.status === Number(action.payload))];
           break;
         case enTipoCriterio.Agencia:
-          state.lanzamientos = state.cache.lanzamientos.filter(l => l.agencyId === Number(action.payload));
+          state.lanzamientos = [ ...state.cache.lanzamientos.filter(l => l.agencyId === Number(action.payload))];
           break;
         case enTipoCriterio.TipoMision:
-          state.lanzamientos = state.cache.lanzamientos.filter(l => l.missionType === Number(action.payload));
+          state.lanzamientos = [ ...state.cache.lanzamientos.filter(l => l.missionType === Number(action.payload))];
           break;
       }
-      console.log(`Asignado ${state.lanzamientos.length} lanzamientos del tipoCriterio:
-          ${enTipoCriterio[state.tipoCriterio]} criterio: ${action.payload}`);
+      // tslint:disable-next-line:max-line-length
+      console.log(`Asignado ${state.lanzamientos.length} lanzamientos del tipoCriterio: ${enTipoCriterio[state.tipoCriterio]} criterio: ${action.payload}`);
       break;
-
-
-    default:
-      return state;
   }
+  return state;
 }
 
 /// ISA is an acronim of International Space Agency (Dedicater to my dear aunt Isabel)

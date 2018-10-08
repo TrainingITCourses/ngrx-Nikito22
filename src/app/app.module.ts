@@ -9,8 +9,7 @@ import { LsBuscadorLanzamientosComponent } from './ls-buscador/buscadorLanzamien
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { metaReducers, reducers } from './reducers';
-import { environment } from 'environments/environment';
-
+import { environment } from '../environments/environment';
 
 @NgModule({
     declarations: [
@@ -24,7 +23,7 @@ import { environment } from 'environments/environment';
         HttpClientModule,
         StoreModule.forRoot(reducers, { metaReducers }),
         !environment.production
-            ? StoreDevtoolsModule.instrumentStore()
+            ? StoreDevtoolsModule.instrument()
             : []
     ],
     exports: [],

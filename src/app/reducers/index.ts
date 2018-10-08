@@ -6,13 +6,12 @@ import {
   createSelector,
   MetaReducer
 } from '@ngrx/store';
-import * as fromIsa from 'app/isa.reducer';
+import * as fromIsa from './../isa.reducer';
 import { environment } from '../../environments/environment';
 
 
 export interface State {
-  isa: Isa;
-
+  isa: fromIsa.State;
 }
 
 export const reducers: ActionReducerMap<State> = {

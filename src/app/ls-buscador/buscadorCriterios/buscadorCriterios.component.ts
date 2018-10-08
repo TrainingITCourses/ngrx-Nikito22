@@ -1,7 +1,8 @@
-import { CambioCritero } from './../../stores/isa-store.actions';
+import { State } from './../../reducers/index';
 import { Component, OnInit } from '@angular/core';
-import { IsaStore, IsaSlideTypes } from './../../stores/isa-store.state';
 import { Observable } from 'rxjs';
+import { CambioCritero } from '../../isa.actions';
+import { Store } from '@ngrx/store';
 
 
 @Component({
@@ -12,15 +13,15 @@ import { Observable } from 'rxjs';
 
 export class LsBuscadorCriteriosComponent implements OnInit {
 
-  public criterios$: Observable<any>;
+  public isa$: Observable<any>;
 
-  constructor(public Isa: IsaStore) { }
+  constructor(public store: Store<State>) { }
 
   ngOnInit() {
-    this.criterios$ = this.Isa.select$(IsaSlideTypes.criterios);
+    this.isa$ = this.store.select('isa');
   }
 
   onCambioCriterio(event) {
-    this.Isa.dispatch(new CambioCritero(event.target.value));
+    this.store.dispatch(new CambioCritero(event.target.value));
   }
 }

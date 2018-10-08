@@ -2,10 +2,10 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { forkJoin, Observable } from 'rxjs';
 import { delay } from 'rxjs/operators';
-import { IsaStore, IsaSlideTypes } from './../stores/isa-store.state';
-import { CargaInicial, CambioTipoCriterio, CambioCritero } from '../stores/isa-store.actions';
-import { Selopt, enTipoCriterio, ICache } from '../isa.model';
-import { } from 'q';
+
+import { Store } from '@ngrx/store';
+import { State, ICache, enTipoCriterio } from '../isa.reducer';
+import { CargaInicial, CambioTipoCriterio, CambioCritero } from '../isa.actions';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -16,9 +16,8 @@ import { } from 'q';
 export class LsBuscadorComponent implements OnInit {
 
     public tiposCriterios: any[];
-    public estaCargado$: Observable<any>;
 
-    constructor(public Isa: IsaStore,
+    constructor(public store: Store<State>,
         public http: HttpClient
     ) { }
 
@@ -26,7 +25,6 @@ export class LsBuscadorComponent implements OnInit {
         // Con el pipe async y los observables por slices no es realmente necesario usar los snapshots.
         // He forzado el uso de snapshots en estos valores 'fijos' de tipos de criterios solo para satisfacer
         // el enunciado del ejercicio
-        this.estaCargado$ = this.Isa.select$(IsaSlideTypes.cargaInicial);
         this.tiposCriterios = Object.keys(enTipoCriterio).slice(Object.keys(enTipoCriterio).length / 2);
 
         const cache: ICache = {
@@ -63,13 +61,12 @@ export class LsBuscadorComponent implements OnInit {
                     , missionType: d.missions ? d.missions.length > 0 ? d.missions[0].type : 0 : 0
                 }));
                 console.log('Store inicializado con los json mapeados (reducidos) y listos para su consumo');
-                this.Isa.dispatch(new CargaInicial(cache));
+                this.store.dispatch(new CargaInicial(cache));
             });
-
     }
 
     alCambioTipoCriterio(event) {
-        this.Isa.dispatch(new CambioTipoCriterio(event.target.selectedIndex));
-        this.Isa.dispatch(new CambioCritero('1')); // cargamos los lanzamientos del primer valor de los criterios
+        this.store.dispatch(new CambioTipoCriterio(event.target.selectedIndex));
+        this.store.dispatch(new CambioCritero('1')); // cargamos los lanzamientos del primer valor de los criterios
     }
 }
