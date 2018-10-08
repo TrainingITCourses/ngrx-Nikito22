@@ -21,7 +21,7 @@ export const initialState: State = {
     lanzamientos: []
   },
   cargado: false,
-  tipoCriterio: null,
+  tipoCriterio: -1,
   criterios: [],
   lanzamientos: [],
 };

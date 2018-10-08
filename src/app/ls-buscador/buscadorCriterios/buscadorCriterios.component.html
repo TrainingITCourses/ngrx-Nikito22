@@ -1,5 +1,5 @@
-<div *ngIf="(isa$ | async).cargado">
+<span *ngIf="(isa$ | async).cargado && (isa$ | async).tipoCriterio >= 0">
   <select (change)="onCambioCriterio($event)">
     <option [value]='o.value' *ngFor="let o of (isa$ | async).criterios"> {{o.viewValue}} </option>
   </select>
-</div>
+</span>
