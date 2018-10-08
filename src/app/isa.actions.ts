@@ -2,14 +2,23 @@ import { Action } from '@ngrx/store';
 import { enTipoCriterio, ICache } from './isa.reducer';
 
 export enum IsaActionTypes {
-  CargaInicial = '[Isa] CargaInicial',
+  CargarCache = '[Isa] CargarCache',
+  CacheCargado = '[Isa] CacheCargado',
+  CacheNoCargado = '[Isa] CacheNoCargado',
   CambioTipoCriterio = '[Isa] CambioTipoCriterio',
   CambioCritero = '[Isa] CambioCritero'
 }
 
-export class CargaInicial implements Action {
-  public readonly type = IsaActionTypes.CargaInicial;
+export class CargarCache implements Action {
+  public readonly type = IsaActionTypes.CargarCache;
+}
+
+export class CacheCargado implements Action {
+  public readonly type = IsaActionTypes.CacheCargado;
   constructor(public readonly payload: ICache) { }
+}
+export class CacheNoCargado implements Action {
+  public readonly type = IsaActionTypes.CacheNoCargado;
 }
 export class CambioTipoCriterio implements Action {
   public readonly type = IsaActionTypes.CambioTipoCriterio;
@@ -21,5 +30,4 @@ export class CambioCritero implements Action {
   constructor(public readonly payload: string) { }
 }
 
-
-export type IsaActions = CargaInicial | CambioTipoCriterio | CambioCritero;
+export type IsaActions = CargarCache | CacheCargado | CacheNoCargado | CambioTipoCriterio | CambioCritero;

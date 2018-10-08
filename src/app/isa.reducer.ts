@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { CargaInicial, IsaActionTypes, IsaActions } from './isa.actions';
+import { IsaActionTypes, IsaActions, CacheCargado, CacheNoCargado } from './isa.actions';
 
 
 export interface State {
@@ -14,6 +14,7 @@ export interface State {
 
 export const initialState: State = {
   cache: {
+    tiposCriterios: [],
     estados: [],
     agencias: [],
     tiposMision: [],
@@ -27,10 +28,18 @@ export const initialState: State = {
 
 export function reducer(state = initialState, action: IsaActions): State {
   switch (action.type) {
-    case IsaActionTypes.CargaInicial:
+    case IsaActionTypes.CargarCache:
+      return state;
+      break;
+
+    case IsaActionTypes.CacheCargado:
       state.cache = action.payload;
       state.cargado = true;
-      console.log('Cargados datos iniciales');
+      return { ...state };
+      break;
+
+    case IsaActionTypes.CacheNoCargado:
+      return state;
       break;
 
     case IsaActionTypes.CambioTipoCriterio:
@@ -46,30 +55,31 @@ export function reducer(state = initialState, action: IsaActions): State {
           state.criterios = state.cache.tiposMision;
           break;
       }
-      console.log('Asignados criterios ' + enTipoCriterio[action.payload]);
+      return { ...state };
       break;
 
     case IsaActionTypes.CambioCritero:
       switch (state.tipoCriterio) {
         case enTipoCriterio.Estado:
-          state.lanzamientos = [ ...state.cache.lanzamientos.filter(l => l.status === Number(action.payload))];
+          state.lanzamientos = [...state.cache.lanzamientos.filter(l => l.status === Number(action.payload))];
           break;
         case enTipoCriterio.Agencia:
-          state.lanzamientos = [ ...state.cache.lanzamientos.filter(l => l.agencyId === Number(action.payload))];
+          state.lanzamientos = [...state.cache.lanzamientos.filter(l => l.agencyId === Number(action.payload))];
           break;
         case enTipoCriterio.TipoMision:
-          state.lanzamientos = [ ...state.cache.lanzamientos.filter(l => l.missionType === Number(action.payload))];
+          state.lanzamientos = [...state.cache.lanzamientos.filter(l => l.missionType === Number(action.payload))];
           break;
       }
       // tslint:disable-next-line:max-line-length
-      console.log(`Asignado ${state.lanzamientos.length} lanzamientos del tipoCriterio: ${enTipoCriterio[state.tipoCriterio]} criterio: ${action.payload}`);
+      return { ...state };
       break;
   }
-  return state;
+
 }
 
 /// ISA is an acronim of International Space Agency (Dedicater to my dear aunt Isabel)
 export interface ICache {
+  tiposCriterios: string[];
   estados: Selopt[];
   agencias: Selopt[];
   tiposMision: Selopt[];

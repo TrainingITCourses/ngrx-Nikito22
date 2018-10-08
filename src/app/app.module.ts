@@ -10,6 +10,8 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { metaReducers, reducers } from './reducers';
 import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { IsaEffects } from './isa.effects';
 
 @NgModule({
     declarations: [
@@ -24,7 +26,8 @@ import { environment } from '../environments/environment';
         StoreModule.forRoot(reducers, { metaReducers }),
         !environment.production
             ? StoreDevtoolsModule.instrument()
-            : []
+            : [],
+        EffectsModule.forRoot([IsaEffects])
     ],
     exports: [],
     providers: [],
